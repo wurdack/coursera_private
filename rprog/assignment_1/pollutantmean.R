@@ -22,10 +22,19 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
         ids <- sprintf("%03d.csv",id)
         filenames <- file.path(directory, ids)
 
-        ## TODO: Read the date frame from each file in filenames
-        accumulator <- sapply(filenames, read.csv)
-        accumulator[pollutant,]
+        ## Read the date frame from each file in filenames
+        frames <- lapply(filenames, read.csv)
 
+        ## Bind all the frames together
+        all_frames <- Reduce(rbind, frames)
 
+        ## Extract requested column
+        col <- all_frames[,pollutant]
+
+        ## Remove NAs
+        cleaned <- col[!is.na(col)]
+
+        ## Calculate mean
+        mean(cleaned)
 }
 
