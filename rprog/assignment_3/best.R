@@ -1,6 +1,7 @@
 best <- function(state, outcome) {
+
         ## Read outcome data
-        ot<-read.csv("outcome-of-care-measures.csv")
+        ot<-read.csv("outcome-of-care-measures.csv", colClasses = "character")
         
         ## Check that state and outcome are valid
         if (!sum(ot$State==state)) {
@@ -18,16 +19,16 @@ best <- function(state, outcome) {
                 stop("invalid outcome")
         }
         
-        ## Extract the 
+        ## Convert numbers from strings to actual numbers.
+        ot[,col] <- as.numeric(ot[,col])
         
+        ## Sort the table
+        ot_sorted <- ot[order(ot[,col], ot$Hospital.Name),]
+        
+        ## Extract records for the supplied state
+        state_only <- ot_sorted[ot_sorted$State == state,]
+
         ## Return hospital name in that state with lowest 30-day death
         ## rate
-
-        
-        message(state)
-        message(outcome)
-        message(col)
-
-
-        ot[ot$state == state, col]
+        toString(state_only[1, "Hospital.Name"])
 }
