@@ -38,6 +38,10 @@ ipch/
 # JetBrains IDE temp files
 .idea
 
+# R
+.RData
+.Rhistory
+
 # gnu tools intermediates
 *.swp
 *.swo
